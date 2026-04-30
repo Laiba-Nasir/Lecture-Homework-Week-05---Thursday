@@ -6,7 +6,7 @@ int sum;
 
 #include "uart.h"  // UART driver code file
 
-int main() {
+int cs122a_main() {
   int i;
   sum = 10;
   char string[64];
@@ -31,4 +31,18 @@ int main() {
   uputc(up, (sum / 10) + '0');
   uputc(up, (sum % 10) + '0');
   uprints(up, "\n\rEND OF RUN\n\r");
+
+  // check with printing 
+
+  for (int i = 0; i < 4; i++)
+  {
+    UART* uup = &uart[i]; 
+    unsigned int ibrd = *(volatile unsigned int*)(uup->base + UARTIBRD);
+    unsigned int lcrh = *(volatile unsigned int*)(uup->base + UARTLCR);
+    unsigned int baud = 7380000 / (16 * ibrd);
+
+    uprintf(up, "UART[%d] Baudrate: %d\n", i, baud);
+    uprintf(up, "UART[%d] Line Control Register: 0x%x\n", i, lcrh);
+  }
+  
 }
