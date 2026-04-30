@@ -41,8 +41,20 @@ int cs122a_main() {
     unsigned int lcrh = *(volatile unsigned int*)(uup->base + UARTLCR);
     unsigned int baud = 7380000 / (16 * ibrd);
 
-    uprintf(up, "UART[%d] Baudrate: %d\n", i, baud);
-    uprintf(up, "UART[%d] Line Control Register: 0x%x\n", i, lcrh);
+    // uprintf(up, "UART[%d] Baudrate: %d\n", i, baud);
+    uprints(up, "UART[");
+    uputc(up, '0' + i);
+    uprints(up, "] Baudrate: ");
+    uprintu(up, baud);
+    uprints(up, "\n\r");
+
+
+    // uprintf(up, "UART[%d] Line Control Register: 0x%x\n", i, lcrh);
+    uprints(up, "UART[");
+    uputc(up, '0' + i);
+    uprints(up, "] Line Control Register: 0x");
+    uprintx(up, lcrh);
+    uprints(up, "\n\r");
   }
   
 }
